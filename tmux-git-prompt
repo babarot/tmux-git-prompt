@@ -10,7 +10,12 @@ export GIT_PS1_DESCRIBE_STYLE="branch"
 export GIT_PS1_SHOWCOLORHINTS=0
 
 dir=${1}
-if [[ -d ${dir}/.git ]]; then
-  cd "${dir}"
-  echo "$(__git_ps1 "%s" 2>/dev/null)"
+if [[ ! -d ${dir}/.git ]]; then
+  exit 0
+fi
+
+cd "${dir}"
+worktree="$(__git_ps1 "%s" 2>/dev/null)"
+if [[ -n ${worktree} ]]; then
+  echo ${worktree}
 fi
