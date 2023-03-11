@@ -1,6 +1,6 @@
 ## tmux-git-prompt
 
-<img src="./screenshot.png" width="200">
+<img src="https://user-images.githubusercontent.com/4442708/224504450-6f2435c1-a7d0-4431-bfd9-46da82a4fba4.png" width="200">
 
 ### Installation
 
@@ -14,7 +14,7 @@ Write above line to your `~/.tmux.conf` and then type <kbd>prefix</kbd>+<kbd>I</
 
 ### Notes
 
-[./git-prompt.sh](./git-prompt.sh) comes from https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh. No modification has been done.
+./git-prompt.sh will be downloaded when initial running from https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh. No modification has been done.
 
 ### License
 

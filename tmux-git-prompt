@@ -1,6 +1,10 @@
 #!/bin/bash
 
-source ~/.tmux/plugins/tmux-git-prompt/git-prompt.sh &>/dev/null
+source_path=~/.tmux/plugins/tmux-git-prompt/git-prompt.sh
+if [[ ! -f ${source_path} ]]; then
+  curl -sL https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > ${source_path}
+fi
+source ${source_path} &>/dev/null
 
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
