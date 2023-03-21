@@ -6,19 +6,22 @@ if [[ ! -f ${source_path} ]]; then
 fi
 source ${source_path} &>/dev/null
 
-export GIT_PS1_SHOWDIRTYSTATE=1
-export GIT_PS1_SHOWSTASHSTATE=1
-export GIT_PS1_SHOWUNTRACKEDFILES=1
-export GIT_PS1_SHOWUPSTREAM="auto"
-export GIT_PS1_DESCRIBE_STYLE="branch"
-export GIT_PS1_SHOWCOLORHINTS=0
+export GIT_PS1_SHOWDIRTYSTATE=${GIT_PS1_SHOWDIRTYSTATE:-1}
+export GIT_PS1_SHOWSTASHSTATE=${GIT_PS1_SHOWSTASHSTATE:-1}
+export GIT_PS1_SHOWUNTRACKEDFILES=${GIT_PS1_SHOWUNTRACKEDFILES:-1}
+export GIT_PS1_SHOWUPSTREAM=${GIT_PS1_SHOWUPSTREAM:-"auto"}
+export GIT_PS1_DESCRIBE_STYLE=${GIT_PS1_DESCRIBE_STYLE:-"branch"}
+export GIT_PS1_SHOWCOLORHINTS=${GIT_PS1_SHOWCOLORHINTS:-}
 
-dir=${1}
-if [[ ! -d ${dir}/.git ]]; then
+cwd=${1:?cwd is required}
+if ! git -C ${cwd} rev-parse --is-inside-work-tree &>/dev/null; then
+  echo "not-a-git-repo"
   exit 0
 fi
 
-cd "${dir}"
+root=$(git -C ${cwd} rev-parse --show-toplevel)
+cd "${root}"
+
 worktree="$(__git_ps1 "%s" 2>/dev/null)"
 if [[ -n ${worktree} ]]; then
   echo ${worktree}
