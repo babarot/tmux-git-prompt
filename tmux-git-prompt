@@ -2,7 +2,7 @@
 
 source_path=~/.tmux/plugins/tmux-git-prompt/git-prompt.sh
 if [[ ! -f ${source_path} ]]; then
-  curl -sL https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > ${source_path}
+  curl -sL https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh >${source_path}
 fi
 source ${source_path} &>/dev/null
 
@@ -13,16 +13,22 @@ export GIT_PS1_SHOWUPSTREAM=${GIT_PS1_SHOWUPSTREAM:-"auto"}
 export GIT_PS1_DESCRIBE_STYLE=${GIT_PS1_DESCRIBE_STYLE:-"branch"}
 export GIT_PS1_SHOWCOLORHINTS=${GIT_PS1_SHOWCOLORHINTS:-}
 
-cwd=${1:?cwd is required}
-if ! git -C ${cwd} rev-parse --is-inside-work-tree &>/dev/null; then
-  echo "not-a-git-repo"
+cwd="${1:-${PWD}}"
+if ! git -C "${cwd}" rev-parse --is-inside-work-tree &>/dev/null; then
   exit 0
 fi
 
-root=$(git -C ${cwd} rev-parse --show-toplevel)
-cd "${root}"
+root=$(git -C "${cwd}" rev-parse --show-toplevel)
+cd "${root}" || exit 1
 
 worktree="$(__git_ps1 "%s" 2>/dev/null)"
-if [[ -n ${worktree} ]]; then
-  echo ${worktree}
+if [[ -z ${worktree} ]]; then
+  echo "failed to get worktree"
+  exit 1
+fi
+
+if [[ -n ${TMUX} ]]; then
+  echo " (${worktree}) " # for tmux status bar
+else
+  echo "${worktree}"
 fi
