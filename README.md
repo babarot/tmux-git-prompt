@@ -7,14 +7,14 @@
 Use [tpm](https://github.com/tmux-plugins/tpm):
 
 ```tmux
-set -g @plugin 'b4b4r07/tmux-git-prompt'
+set -g @plugin 'babarot/tmux-git-prompt'
 ```
 
 Write above line to your `~/.tmux.conf` and then type <kbd>prefix</kbd>+<kbd>I</kbd>.
 
 ### Notes
 
-./git-prompt.sh will be downloaded when initial running from https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh. No modification has been done.
+`./git-prompt.sh` will be downloaded when initial running from [`git/git`](https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh). No modification has been done.
 
 ### License
 
